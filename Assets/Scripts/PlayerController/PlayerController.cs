@@ -124,8 +124,16 @@ public class PlayerController : MonoBehaviour
         }
 
         // Clamp run by stamina
-        if (RunInput && CurrentStamina > StaminaThresholdToRun)
-            DrainStamina(StaminaDrainPerSecond * Time.deltaTime);
+        if (RunInput)
+        {
+            CanRun = CurrentStamina >= StaminaThresholdToRun;
+
+            if(CanRun)
+            {
+
+                DrainStamina(StaminaDrainPerSecond * Time.deltaTime);
+            }
+        }
         else
             RegenerateStamina(StaminaRegenPerSecond * Time.deltaTime);
 
@@ -169,11 +177,15 @@ public class PlayerController : MonoBehaviour
           () => { PlayerAnimator.Play("Idle"); Debug.Log("IDLE"); });
     }
 
+    private void Run()
+    {
+
+    }
+
     #region Public Methods
     public void DrainStamina(float amount)
     {
-        CurrentStamina = Mathf.Max(CurrentStamina - amount, 0f);
-        CanRun = CurrentStamina >= StaminaThresholdToRun;     
+        CurrentStamina = Mathf.Max(CurrentStamina - amount, 0f); 
 
     }
 
