@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         // Read inputs
         Movement = _moveAction.ReadValue<Vector2>().normalized;
-        Debug.Log(Movement.sqrMagnitude);
+        //Debug.Log(Movement.sqrMagnitude);
         RunInput = _runAction.IsPressed();
         // Aim read
         Vector2 stick = _aimStickAction.ReadValue<Vector2>();

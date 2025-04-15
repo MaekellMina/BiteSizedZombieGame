@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -83,12 +83,12 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -117,7 +117,448 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Metal_roof_house_0
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 354
+        width: 142
+        height: 174
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 040074da0b45e8f45851d5307b4bf581
+      internalID: -1096479226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_1
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 354
+        width: 142
+        height: 174
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d44ba95105ada274482dd252b9e9ae87
+      internalID: 579336566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_2
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 354
+        width: 142
+        height: 174
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90f20a1056eeac444ac5e0f70f60f5fd
+      internalID: 877386132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_3
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 354
+        width: 142
+        height: 174
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ac9a2dfe550c8d46b19a8f5e4018ca7
+      internalID: 111052778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_4
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 354
+        width: 142
+        height: 174
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4f1d51b4f606649bde64923de990c5
+      internalID: -1867493463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_5
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 304
+        width: 112
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bada3d569b8dc744915e40985c7f8ec
+      internalID: 599521127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_6
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 304
+        width: 112
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2a4e7778d5383f4bbc549e76e18b089
+      internalID: 306617605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_7
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 165
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49354d94d4e04424b8bf8f5f0d380055
+      internalID: 1198748150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_8
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 165
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93ea31dd7b7e3504695c40581f883f60
+      internalID: 1941936381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_9
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 165
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79a650b669740624cb9f775c26a651d1
+      internalID: 184320643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_10
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 165
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79383abc463658848903721d68bbe267
+      internalID: 894613081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_11
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 163
+        width: 87
+        height: 137
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f92708ba198d074a809ce0aacbe52b6
+      internalID: -318080021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_12
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 163
+        width: 87
+        height: 137
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de9fb405881f1b24eb3c7d6fc236af8f
+      internalID: 419487547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_13
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 163
+        width: 90
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5780c162c2c02764eba32179d45c360b
+      internalID: -2085684970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_14
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 21
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94bdea300dd6c334c9127b16bbbd1f28
+      internalID: -847395422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_15
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 21
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 501239cf6be8bcd4ea24a20a2d531991
+      internalID: -85674829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_16
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 21
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e53dd69be6692945a4d03d3a3187f80
+      internalID: -1064130219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_17
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 21
+        width: 106
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b60cb867a994096488c0c2b93bd050c2
+      internalID: -1384130922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_18
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 19
+        width: 90
+        height: 137
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b94294a0fb5a7814b84054f615da4acf
+      internalID: 1290626366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_19
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 19
+        width: 90
+        height: 137
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 528665925d5071244bcf925381c533db
+      internalID: -909019576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Metal_roof_house_20
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 19
+        width: 90
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3a2d7debc11a7b4299a00b31bca040f
+      internalID: -125665170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -128,7 +569,28 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Metal_roof_house_3: 111052778
+      Metal_roof_house_4: -1867493463
+      Metal_roof_house_0: -1096479226
+      Metal_roof_house_2: 877386132
+      Metal_roof_house_9: 184320643
+      Metal_roof_house_19: -909019576
+      Metal_roof_house_16: -1064130219
+      Metal_roof_house_18: 1290626366
+      Metal_roof_house_20: -125665170
+      Metal_roof_house_13: -2085684970
+      Metal_roof_house_7: 1198748150
+      Metal_roof_house_6: 306617605
+      Metal_roof_house_8: 1941936381
+      Metal_roof_house_11: -318080021
+      Metal_roof_house_17: -1384130922
+      Metal_roof_house_5: 599521127
+      Metal_roof_house_10: 894613081
+      Metal_roof_house_1: 579336566
+      Metal_roof_house_14: -847395422
+      Metal_roof_house_15: -85674829
+      Metal_roof_house_12: 419487547
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
