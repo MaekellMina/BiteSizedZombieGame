@@ -1,3 +1,4 @@
+using PrimeTween;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,8 +60,35 @@ public class ForegroundTransparencyController : MonoBehaviour
 
     void StartFade(float targetOpacity)
     {
-        if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
-        fadeCoroutine = StartCoroutine(FadeForegrounds(targetOpacity));
+        //if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+        //fadeCoroutine = StartCoroutine(FadeForegrounds(targetOpacity));
+
+        var originalAlphas = new Dictionary<SpriteRenderer, Color>();
+        foreach (var sr in foregrounds)
+            if (sr != null)
+                originalAlphas[sr] = sr.color;
+
+        foreach (var sr in foregrounds)
+        {
+            if (sr == null) continue;
+            Color startColor = originalAlphas[sr];
+            Color targetColor = new Color(startColor.r, startColor.b, startColor.g, targetOpacity);
+
+            Tween.Custom(startColor, targetColor, fadeDuration, (x) => sr.color = x).OnComplete(() => updateCollider(sr,targetColor,targetOpacity));
+        }
+    }
+
+    void updateCollider(SpriteRenderer sr,Color targetColor,float targetOpacity)
+    {
+        sr.color = targetColor;
+        // enable/disable colliders at endpoints
+        if (_fgColliders.TryGetValue(sr, out var cols))
+        {
+            bool passable = Mathf.Approximately(targetOpacity, minOpacity);
+            foreach (var col in cols)
+                if (col != null)
+                    col.enabled = !passable;
+        }
     }
 
     IEnumerator FadeForegrounds(float targetOpacity)
