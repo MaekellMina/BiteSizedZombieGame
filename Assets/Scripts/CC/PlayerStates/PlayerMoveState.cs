@@ -13,7 +13,10 @@ public class PlayerMoveState : cc.FiniteStateMachine.IPlayerState
     float speed = 5f;
     UnityEvent OnEnterEvent = new UnityEvent();
     UnityEvent OnExitEvent = new UnityEvent();
- 
+
+    public Animator playerAnim;
+    private MovementSettings currentMovementSettings;
+
     public PlayerMoveState(InputAction moveAction, Rigidbody2D rbody2d, float speed, UnityAction onEnter = null, UnityAction onExit = null)
     {
         _moveAction = moveAction;
@@ -50,9 +53,14 @@ public class PlayerMoveState : cc.FiniteStateMachine.IPlayerState
        _rbody2d.MovePosition(_rbody2d.position + _moveAction.ReadValue<Vector2>().normalized * speed * Time.fixedDeltaTime);
     }
 
-    public void SetSpeed(float speed)
+    public void SetSpeed(MovementSettings movementSettings)
     {
-        this.speed = speed;
+        if (currentMovementSettings.Equals(movementSettings)) return; // skip if no change
+
+        currentMovementSettings = movementSettings;
+        this.speed = movementSettings.speed;
+        playerAnim.Play(movementSettings.animName);
+        Debug.Log(movementSettings.animName);
     }
 
 }

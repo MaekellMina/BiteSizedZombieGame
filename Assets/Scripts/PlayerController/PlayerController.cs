@@ -8,8 +8,8 @@ using System;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float WalkSpeed = 5f;
-    public float RunSpeed = 9f;
+    public MovementSettings WalkSettings;
+    public MovementSettings RunSettings;
 
     [Header("References")]
     public Animator PlayerAnimator;
@@ -126,8 +126,11 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        // State updates
+        _stateMachine.Tic();
+
         // Running
-        bool wantsToRun = RunInput;
+        bool wantsToRun = RunInput && Movement != Vector2.zero;
         if (wantsToRun)
         {
             if (!isRunning && stamina.CanStartRun)
@@ -147,16 +150,15 @@ public class PlayerController : MonoBehaviour
             if (stamina.CurrentStamina <= 0f)
             {
                 isRunning = false;
-                _moveState.SetSpeed(WalkSpeed);
+                _moveState.SetSpeed(WalkSettings);
             }
         }
         else
         {
-            _moveState.SetSpeed(WalkSpeed);
+            if(Movement != Vector2.zero)
+                _moveState.SetSpeed(WalkSettings);
         }
 
-        // State updates
-        _stateMachine.Tic();
     }
 
     void FixedUpdate()
@@ -189,16 +191,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void initializeStates()
     {
-        _moveState = new PlayerMoveState(_moveAction, Rbody2D, WalkSpeed,
-            ()=> { PlayerAnimator.Play("Walk"); Debug.Log("BEGIN WOK"); });
-        _idleState = new PlayerIdleState( Rbody2D, WalkSpeed,
+        _moveState = new PlayerMoveState(_moveAction, Rbody2D, WalkSettings.speed,
+            ()=> { PlayerAnimator.Play(WalkSettings.animName); Debug.Log("BEGIN WOK"); });
+        _moveState.playerAnim = PlayerAnimator;
+        _idleState = new PlayerIdleState( Rbody2D, WalkSettings.speed,
           () => { PlayerAnimator.Play("Idle"); Debug.Log("IDLE"); });
     }
 
     private void Run()
     {
-        _moveState.SetSpeed(RunSpeed);
-        PlayerAnimator.Play("Run");
+        _moveState.SetSpeed(RunSettings);
         stamina.DrainStamina(RunStaminaDrainPerSecond * Time.deltaTime);
     }
 

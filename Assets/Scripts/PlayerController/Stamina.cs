@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class Stamina : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Stamina : MonoBehaviour
     private float timeSinceLastDrain = 0f;
     private bool isDraining = false;
 
+    public UnityEvent<float> e_OnStaminaPrctUpdated = new UnityEvent<float>();
+
     private void Awake()
     {
         CurrentStamina = MaxStamina;
@@ -23,6 +26,7 @@ public class Stamina : MonoBehaviour
     public void DrainStamina(float amount)
     {
         CurrentStamina = Mathf.Max(CurrentStamina - amount, 0f);
+        e_OnStaminaPrctUpdated.Invoke(CurrentStamina / MaxStamina);
         timeSinceLastDrain = 0f;
         isDraining = true;
     }
@@ -30,6 +34,7 @@ public class Stamina : MonoBehaviour
     public void RegenerateStamina(float amount)
     {
         CurrentStamina = Mathf.Min(CurrentStamina + amount, MaxStamina);
+        e_OnStaminaPrctUpdated.Invoke(CurrentStamina / MaxStamina);
     }
 
     private void Update()
