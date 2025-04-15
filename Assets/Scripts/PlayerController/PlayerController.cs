@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
     private void Run()
     {
         _moveState.SetSpeed(RunSpeed);
+        PlayerAnimator.Play("Run");
         stamina.DrainStamina(RunStaminaDrainPerSecond * Time.deltaTime);
     }
 
