@@ -6,7 +6,7 @@ using cc.FiniteStateMachine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
-public class PlayerWalkState : cc.FiniteStateMachine.IPlayerState
+public class PlayerMoveState : cc.FiniteStateMachine.IPlayerState
 {
     InputAction _moveAction;
     Rigidbody2D _rbody2d;
@@ -14,7 +14,7 @@ public class PlayerWalkState : cc.FiniteStateMachine.IPlayerState
     UnityEvent OnEnterEvent = new UnityEvent();
     UnityEvent OnExitEvent = new UnityEvent();
  
-    public PlayerWalkState(InputAction moveAction, Rigidbody2D rbody2d, float speed, UnityAction onEnter = null, UnityAction onExit = null)
+    public PlayerMoveState(InputAction moveAction, Rigidbody2D rbody2d, float speed, UnityAction onEnter = null, UnityAction onExit = null)
     {
         _moveAction = moveAction;
         _rbody2d = rbody2d;
@@ -50,5 +50,9 @@ public class PlayerWalkState : cc.FiniteStateMachine.IPlayerState
        _rbody2d.MovePosition(_rbody2d.position + _moveAction.ReadValue<Vector2>().normalized * speed * Time.fixedDeltaTime);
     }
 
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
 
 }
