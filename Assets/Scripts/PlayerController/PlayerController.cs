@@ -4,11 +4,12 @@ using cc.FiniteStateMachine;
 using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Stamina))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float WalkSpeed = 5f;
-    public float RunSpeed = 8f;
+    public float RunSpeed = 9f;
 
     [Header("References")]
     public Animator PlayerAnimator;
@@ -19,20 +20,16 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D Rbody2D;
     [SerializeField] private Camera _cam;
 
-    [Header("Stamina")]
-    public float MaxStamina = 5f;
-    public float StaminaDrainPerSecond = 1f;
-    public float StaminaRegenPerSecond = 0.5f;
-    public float StaminaThresholdToRun = 0.1f;
-    public float CurrentStamina;
-    public bool CanRun;
+    [Header("Running")]
+    public float RunStaminaDrainPerSecond = 1f;
+    private bool isRunning;
     [HideInInspector] public bool IsArmed => Gun != null;
  
 
 
     // States
     private PlayerIdleState _idleState;
-    private PlayerWalkState _walkState;
+    private PlayerMoveState _moveState;
  
 
     private StateMachineController _stateMachine;
@@ -43,6 +40,9 @@ public class PlayerController : MonoBehaviour
     private InputAction _aimStickAction;
     private InputAction _aimPointerAction;
     private InputAction _runAction;
+
+    //other components
+    private Stamina stamina;
 
     public Vector2 Movement { get; private set; }
     public Vector2 AimDirection { get; private set; }
@@ -70,8 +70,8 @@ public class PlayerController : MonoBehaviour
 
         //add transitions
 
-        _stateMachine.AddTransition(_idleState, _walkState, startWalk());
-        _stateMachine.AddTransition(_walkState, _idleState, endWalk());
+        _stateMachine.AddTransition(_idleState, _moveState, startWalk());
+        _stateMachine.AddTransition(_moveState, _idleState, endWalk());
 
 
         //initialize statemachine
@@ -80,11 +80,14 @@ public class PlayerController : MonoBehaviour
         //define transitions
         Func<bool> startWalk() => () => Movement.sqrMagnitude > 0;
         Func<bool> endWalk() => () => Movement.sqrMagnitude <=  0;
+
+        //other components
+        stamina = GetComponent<Stamina>();
     }
 
     void Start()
     {
-        CurrentStamina = MaxStamina;
+
     }
 
     void OnEnable()
@@ -123,19 +126,34 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        // Clamp run by stamina
-        if (RunInput)
+        // Running
+        bool wantsToRun = RunInput;
+        if (wantsToRun)
         {
-            CanRun = CurrentStamina >= StaminaThresholdToRun;
-
-            if(CanRun)
+            if (!isRunning && stamina.CanStartRun)
             {
-
-                DrainStamina(StaminaDrainPerSecond * Time.deltaTime);
+                isRunning = true;
             }
         }
         else
-            RegenerateStamina(StaminaRegenPerSecond * Time.deltaTime);
+        {
+            isRunning = false;
+        }
+
+        if (isRunning)
+        {
+            Run();
+
+            if (stamina.CurrentStamina <= 0f)
+            {
+                isRunning = false;
+                _moveState.SetSpeed(WalkSpeed);
+            }
+        }
+        else
+        {
+            _moveState.SetSpeed(WalkSpeed);
+        }
 
         // State updates
         _stateMachine.Tic();
@@ -171,7 +189,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void initializeStates()
     {
-        _walkState = new PlayerWalkState(_moveAction, Rbody2D, WalkSpeed,
+        _moveState = new PlayerMoveState(_moveAction, Rbody2D, WalkSpeed,
             ()=> { PlayerAnimator.Play("Walk"); Debug.Log("BEGIN WOK"); });
         _idleState = new PlayerIdleState( Rbody2D, WalkSpeed,
           () => { PlayerAnimator.Play("Idle"); Debug.Log("IDLE"); });
@@ -179,21 +197,11 @@ public class PlayerController : MonoBehaviour
 
     private void Run()
     {
-
+        _moveState.SetSpeed(RunSpeed);
+        stamina.DrainStamina(RunStaminaDrainPerSecond * Time.deltaTime);
     }
 
     #region Public Methods
-    public void DrainStamina(float amount)
-    {
-        CurrentStamina = Mathf.Max(CurrentStamina - amount, 0f); 
-
-    }
-
-    public void RegenerateStamina(float amount)
-    {
-        CurrentStamina = Mathf.Min(CurrentStamina + amount, MaxStamina);
-        CanRun = CurrentStamina >= StaminaThresholdToRun;
-    }
 
     #endregion
 }
