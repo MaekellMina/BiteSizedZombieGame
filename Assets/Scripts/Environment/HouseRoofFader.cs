@@ -16,10 +16,14 @@ public class HouseRoofFader : MonoBehaviour
     public float fadeDuration = 0.5f;
     [Range(0f, 1f)] public float hiddenAlpha = 0.2f;
 
+    [Header("Bounds Setup")]
+    [SerializeField] private BoundsInt houseBounds;
+
     private BoundsInt houseTileBounds;
     private Dictionary<Vector3Int, Color> originalColors = new();
     private Dictionary<Vector3Int, Color> accessoryColors = new();
-    private Coroutine fadeRoutine;
+
+    public BoundsInt HouseBounds { get => houseBounds; set => houseBounds = value; }
 
     void Start()
     {
@@ -59,8 +63,7 @@ public class HouseRoofFader : MonoBehaviour
             Debug.Log("PLAYER ENTER");
 
             FadeTile(hiddenAlpha);
-            //if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-            //fadeRoutine = StartCoroutine(FadeTiles(hiddenAlpha));
+           
         }
     }
 
@@ -70,14 +73,15 @@ public class HouseRoofFader : MonoBehaviour
         {
             Debug.Log("PLAYER EXT");
             FadeTile(1);
-            //if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-            //fadeRoutine = StartCoroutine(FadeTiles(1f)); // Restore full alpha
+           
+           
         }
     }
 
     BoundsInt CalculateTileBounds()
     {
-        var worldBounds = GetComponent<BoxCollider2D>().bounds;
+
+        var worldBounds = houseBounds;
         Vector3Int min = roofTilemap.WorldToCell(worldBounds.min);
         Vector3Int max = roofTilemap.WorldToCell(worldBounds.max);
         Vector3Int size = max - min + Vector3Int.one;
@@ -100,14 +104,12 @@ public class HouseRoofFader : MonoBehaviour
     }
 
     public void FadeTile(float targetAlpha)
-    {
-        float time = 0f;
+    {       
         Dictionary<Vector3Int, Color> startColors = new();
 
         foreach (var kv in originalColors)
         {
             startColors[kv.Key] = roofTilemap.GetColor(kv.Key);
-
         }
 
         foreach (var kv in originalColors)
@@ -115,7 +117,7 @@ public class HouseRoofFader : MonoBehaviour
             if (!roofTilemap.HasTile(kv.Key))
             { continue; }
 
-            Debug.Log($"Fading tile at {kv.Key} to alpha {targetAlpha}");
+           // Debug.Log($"Fading tile at {kv.Key} to alpha {targetAlpha}");
             Color start = startColors[kv.Key];
             Color target = new Color(1, 1, 1, targetAlpha);
 
@@ -127,7 +129,6 @@ public class HouseRoofFader : MonoBehaviour
         foreach (var kv in accessoryColors)
         {
             startColors[kv.Key] = accesoryMap.GetColor(kv.Key);
-
         }
 
         foreach (var kv in accessoryColors)
@@ -135,7 +136,7 @@ public class HouseRoofFader : MonoBehaviour
             if (!accesoryMap.HasTile(kv.Key))
             { continue; }
 
-            Debug.Log($"Fading tile at {kv.Key} to alpha {targetAlpha}");
+            //Debug.Log($"Fading tile at {kv.Key} to alpha {targetAlpha}");
             Color start = startColors[kv.Key];
             Color target = new Color(1, 1, 1, targetAlpha);
 
@@ -145,51 +146,10 @@ public class HouseRoofFader : MonoBehaviour
         }
     }
 
-
-    IEnumerator FadeTiles(float targetAlpha)
+    void OnDrawGizmosSelected()
     {
-        float time = 0f;
-        Dictionary<Vector3Int, Color> startColors = new();
-
-        foreach (var kv in originalColors)
-        {
-            startColors[kv.Key] = roofTilemap.GetColor(kv.Key);
-       
-        }
-
-        while (time < fadeDuration)
-        {
-            time += Time.deltaTime;
-            float t = time / fadeDuration;
-
-            foreach (var kv in originalColors)
-            {
-                if (!roofTilemap.HasTile(kv.Key))
-                {   continue; }
-
-                Debug.Log($"Fading tile at {kv.Key} to alpha {targetAlpha}");
-                Color start = startColors[kv.Key];
-                Color target = new Color(1, 1, 1,0);
-             
-
-                Color blended = Color.Lerp(start, target, t);
-                roofTilemap.SetColor(kv.Key, blended);
-               // roofTilemap.SetColor(kv.Key,Color.clear);
-            }
-
-            yield return null;
-        }
-
-        // Ensure final alpha is set exactly
-        foreach (var kv in originalColors)
-        {
-            if (!roofTilemap.HasTile(kv.Key)) continue;
-
-            Color finalColor = kv.Value;
-            finalColor.a = targetAlpha;
-            roofTilemap.SetColor(kv.Key, finalColor);
-        }
-
-        fadeRoutine = null;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(houseBounds.center, houseBounds.size); 
     }
+
 }
