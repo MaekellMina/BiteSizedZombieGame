@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     public Animator PlayerAnimator;
-    public GunController Gun;
     public GameObject Hand;
     public SpriteRenderer ItemOnHand;
     public SpriteRenderer CharacterSprite;
@@ -23,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [Header("Running")]
     public float RunStaminaDrainPerSecond = 1f;
     private bool isRunning;
-    [HideInInspector] public bool IsArmed => Gun != null;
+    [HideInInspector] public bool IsArmed => weaponController != null;
  
 
 
@@ -40,9 +39,11 @@ public class PlayerController : MonoBehaviour
     private InputAction _aimStickAction;
     private InputAction _aimPointerAction;
     private InputAction _runAction;
+    private InputAction _fireAction;
 
     //other components
     private Stamina stamina;
+    private GunController weaponController;
 
     public Vector2 Movement { get; private set; }
     public Vector2 AimDirection { get; private set; }
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         _aimStickAction = gameplay["AimStick"];
         _aimPointerAction = gameplay["AimPointer"];
         _runAction = gameplay["Run"];
+        _fireAction = gameplay["Fire"];
 
 
         //fsm stufff
@@ -83,6 +85,7 @@ public class PlayerController : MonoBehaviour
 
         //other components
         stamina = GetComponent<Stamina>();
+        weaponController = GetComponent<GunController>();
     }
 
     void Start()
@@ -96,6 +99,7 @@ public class PlayerController : MonoBehaviour
         _aimStickAction.Enable();
         _aimPointerAction.Enable();
         _runAction.Enable();
+        _fireAction.Enable();
     }
 
     void OnDisable()
@@ -104,6 +108,7 @@ public class PlayerController : MonoBehaviour
         _aimStickAction.Disable();
         _aimPointerAction.Disable();
         _runAction.Disable();
+        _fireAction.Disable();
     }
 
     void Update()
@@ -112,6 +117,7 @@ public class PlayerController : MonoBehaviour
         Movement = _moveAction.ReadValue<Vector2>().normalized;
         //Debug.Log(Movement.sqrMagnitude);
         RunInput = _runAction.IsPressed();
+        
         // Aim read
         Vector2 stick = _aimStickAction.ReadValue<Vector2>();
         if (stick.sqrMagnitude > 0.01f)
@@ -159,6 +165,11 @@ public class PlayerController : MonoBehaviour
                 _moveState.SetSpeed(WalkSettings);
         }
 
+        //weapon input
+        if(_fireAction.IsPressed())
+        {
+            weaponController.Shoot();
+        }
     }
 
     void FixedUpdate()
@@ -183,7 +194,12 @@ public class PlayerController : MonoBehaviour
 
         bool flip = AimDirection.x < 0f;
         CharacterSprite.flipX = flip;
-        ItemOnHand.flipY = flip;
+        //item on hand flip:
+        Vector3 scale = ItemOnHand.transform.localScale;
+        scale.y = Mathf.Abs(scale.y) * (flip ? -1f : 1f);
+        ItemOnHand.transform.localScale = scale;
+        //---
+
     }
 
     /// <summary>
