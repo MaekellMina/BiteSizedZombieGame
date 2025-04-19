@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7481246945941037836}
   - component: {fileID: 5980184981607892434}
   - component: {fileID: 2386899500384514006}
+  - component: {fileID: 4288847024906787540}
   m_Layer: 0
   m_Name: RandomTree-RedTrunk
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7481246945941037836
 SpriteRenderer:
@@ -153,3 +154,37 @@ MonoBehaviour:
   - {fileID: -1277650438, guid: 178f8e8d7b5fce74682ccf753517a058, type: 3}
   - {fileID: 417294712, guid: 178f8e8d7b5fce74682ccf753517a058, type: 3}
   - {fileID: 656063317, guid: 178f8e8d7b5fce74682ccf753517a058, type: 3}
+--- !u!114 &4288847024906787540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980184981607892437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 41e0804000000000
+  m_ShapePath:
+  - {x: -0.8045045, y: -0.8723345, z: 0}
+  - {x: -0.4185729, y: 0.7437186, z: 0}
+  - {x: -1.3441458, y: 1.4458771, z: 0}
+  - {x: -1.1207316, y: 2.5310316, z: 0}
+  - {x: -0.6768391, y: 5.058502, z: 0}
+  - {x: 0.0920881, y: 5.4034986, z: 0}
+  - {x: 0.6130066, y: 4.9627533, z: 0}
+  - {x: 1.1134099, y: 2.8182778, z: 0}
+  - {x: 1.2091588, y: 1.3820443, z: 0}
+  - {x: 0.44316733, y: 0.77563477, z: 0}
+  - {x: 0.61300683, y: -0.9042511, z: 0}
+  m_ShapePathHash: 272254765
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -1190366
