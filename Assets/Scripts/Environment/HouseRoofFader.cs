@@ -2,7 +2,7 @@ using PrimeTween;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
 
@@ -24,6 +24,9 @@ public class HouseRoofFader : MonoBehaviour
     private Dictionary<Vector3Int, Color> accessoryColors = new();
 
     public BoundsInt HouseBounds { get => houseBounds; set => houseBounds = value; }
+
+    public UnityEvent e_OnShowInside = new UnityEvent();
+    public UnityEvent e_OnHideInside = new UnityEvent();
 
     void Start()
     {
@@ -144,6 +147,10 @@ public class HouseRoofFader : MonoBehaviour
                 .OnComplete(() => accesoryMap.SetColor(kv.Key, target));
 
         }
+
+       
+        if (targetAlpha > 0) e_OnHideInside?.Invoke();
+        else e_OnShowInside?.Invoke();
     }
 
     void OnDrawGizmosSelected()
