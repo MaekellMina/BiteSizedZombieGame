@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     public Animator PlayerAnimator;
     public GameObject Hand;
-    public SpriteRenderer ItemOnHand;
+    public GameObject ItemOnHand;
     public SpriteRenderer CharacterSprite;
     public Rigidbody2D Rbody2D;
     [SerializeField] private Camera _cam;
@@ -100,6 +100,8 @@ public class PlayerController : MonoBehaviour
         _aimPointerAction.Enable();
         _runAction.Enable();
         _fireAction.Enable();
+
+        weaponController.e_OnEquipWeapon.AddListener(UpdateItemOnHand);
     }
 
     void OnDisable()
@@ -109,6 +111,8 @@ public class PlayerController : MonoBehaviour
         _aimPointerAction.Disable();
         _runAction.Disable();
         _fireAction.Disable();
+
+        weaponController.e_OnEquipWeapon.RemoveListener(UpdateItemOnHand);
     }
 
     void Update()
@@ -221,6 +225,9 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Public Methods
-
+    public void UpdateItemOnHand(GameObject obj)
+    {
+        ItemOnHand = obj;
+    }
     #endregion
 }
