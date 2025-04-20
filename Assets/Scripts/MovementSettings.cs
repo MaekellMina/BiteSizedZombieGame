@@ -13,7 +13,6 @@ public struct MovementSettings
             return false;
 
         MovementSettings other = (MovementSettings)obj;
-        Debug.LogError(Mathf.Approximately(speed, other.speed) + " " + speed + " " + other.speed + " " + animName + " " + other.animName);
         return Mathf.Approximately(speed, other.speed) && animName == other.animName;
     }
 

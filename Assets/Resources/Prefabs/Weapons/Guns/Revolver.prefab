@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3326971309996710925}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +32,37 @@ Transform:
   m_Father: {fileID: 6669453564822610227}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2030012005074792875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2276720818088533560}
+  m_Layer: 0
+  m_Name: Shell ejection point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2276720818088533560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030012005074792875}
+  m_LocalRotation: {x: -0, y: -0, z: 0.5369592, w: 0.84360826}
+  m_LocalPosition: {x: 0.095, y: 0.181, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6669453564822610227}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 64.954}
 --- !u!1 &5411548317822467953
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +73,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8126284135876363068}
   - component: {fileID: 6351883058910267327}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GZ2_Weapons_Free_16px_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6669453564822610227}
   - component: {fileID: 2250966928754387222}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,8 +178,9 @@ Transform:
   m_Children:
   - {fileID: 3326971309996710925}
   - {fileID: 6669453564904565712}
+  - {fileID: 2276720818088533560}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2250966928754387222
 MonoBehaviour:
@@ -166,6 +198,8 @@ MonoBehaviour:
   projectile: {fileID: 3887114011074299737, guid: 83b03f67fceeb24418561fe9da69586d, type: 3}
   msBetweenShots: 1000
   muzzleVelocity: 100
+  ejectedShell: {fileID: 1511667219575325440, guid: cb97147bab932184fbec439ee0a3decd, type: 3}
+  shellEjection: {fileID: 2276720818088533560}
 --- !u!1 &6669453564904565715
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6669453564904565712}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,7 +5,7 @@ using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Stamina))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : LivingEntity
 {
     [Header("Movement Settings")]
     public MovementSettings WalkSettings;
@@ -88,8 +88,9 @@ public class PlayerController : MonoBehaviour
         weaponController = GetComponent<GunController>();
     }
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
 
     }
 
