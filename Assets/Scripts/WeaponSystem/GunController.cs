@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class GunController : MonoBehaviour
 {
@@ -29,11 +30,20 @@ public class GunController : MonoBehaviour
         e_OnEquipWeapon?.Invoke(equippedGun.gameObject);
     }
 
-    public void Shoot()
+    public void OnTriggerHold()
     {
         if(equippedGun != null)
         {
-            equippedGun.Shoot();
+            equippedGun.OnTriggerHold();
         }
     }
+
+    public void OnTriggerRelease(InputAction.CallbackContext context)
+    {
+        if(equippedGun != null)
+        {
+            equippedGun.OnTriggerRelease();
+        }
+    }
+
 }

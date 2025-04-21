@@ -100,7 +100,10 @@ public class PlayerController : LivingEntity
         _aimStickAction.Enable();
         _aimPointerAction.Enable();
         _runAction.Enable();
+        //weapon input:
+        _fireAction.canceled += weaponController.OnTriggerRelease;
         _fireAction.Enable();
+        //===
 
         weaponController.e_OnEquipWeapon.AddListener(UpdateItemOnHand);
     }
@@ -110,8 +113,11 @@ public class PlayerController : LivingEntity
         _moveAction.Disable();
         _aimStickAction.Disable();
         _aimPointerAction.Disable();
-        _runAction.Disable();
+        _runAction.Disable(); 
+        //weapon input:
+        _fireAction.canceled -= weaponController.OnTriggerRelease;
         _fireAction.Disable();
+        //===
 
         weaponController.e_OnEquipWeapon.RemoveListener(UpdateItemOnHand);
     }
@@ -170,11 +176,12 @@ public class PlayerController : LivingEntity
                 _moveState.SetSpeed(WalkSettings);
         }
 
-        //weapon input
+        //weapon input:
         if(_fireAction.IsPressed())
         {
-            weaponController.Shoot();
+            weaponController.OnTriggerHold();
         }
+        //===
     }
 
     void FixedUpdate()

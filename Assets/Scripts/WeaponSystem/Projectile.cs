@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float damage = 1;
+    public float lifetime = 1;
     public LayerMask collisionMask;
 
     float speed = 10;
@@ -19,6 +20,11 @@ public class Projectile : MonoBehaviour
         float moveDistance = speed * Time.deltaTime;
         CheckCollisions(moveDistance);
         transform.Translate(Vector3.right * moveDistance);  //instead of Vector forward, use Vector right since it's 2d
+
+        lifetime -= Time.deltaTime;
+
+        if (lifetime < 0)
+            Destroy(gameObject);
     }
 
     void CheckCollisions(float moveDistance)

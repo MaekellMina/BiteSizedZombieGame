@@ -147,6 +147,37 @@ Transform:
   m_Father: {fileID: 6669453564822610227}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 64.954}
+--- !u!1 &3786029068376776101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2304542847810676046}
+  m_Layer: 0
+  m_Name: ProjectileSpawn (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2304542847810676046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3786029068376776101}
+  m_LocalRotation: {x: -0, y: -0, z: -0.044783365, w: 0.99899673}
+  m_LocalPosition: {x: 0.735, y: 0.212, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6669453564822610227}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -5.134}
 --- !u!1 &5080360616689884606
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,14 +201,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5080360616689884606}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.735, y: 0.212, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1942272597434555072}
   - {fileID: 2296561664308959057}
-  m_Father: {fileID: 6669453564904565712}
+  m_Father: {fileID: 6669453564822610227}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5411548317822467953
@@ -387,7 +418,7 @@ GameObject:
   - component: {fileID: 2250966928754387222}
   - component: {fileID: 8568404200764266677}
   m_Layer: 0
-  m_Name: Revolver
+  m_Name: Revolver-Spread
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,7 +438,10 @@ Transform:
   m_Children:
   - {fileID: 3326971309996710925}
   - {fileID: 6669453564904565712}
+  - {fileID: 2304542847810676046}
+  - {fileID: 7278196836445411021}
   - {fileID: 2276720818088533560}
+  - {fileID: 6830227032887586128}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -426,8 +460,10 @@ MonoBehaviour:
   fireMode: 2
   projectileSpawns:
   - {fileID: 6669453564904565712}
+  - {fileID: 2304542847810676046}
+  - {fileID: 7278196836445411021}
   projectile: {fileID: 3887114011074299737, guid: 83b03f67fceeb24418561fe9da69586d, type: 3}
-  msBetweenShots: 1000
+  msBetweenShots: 350
   muzzleVelocity: 100
   burstCount: 0
   ejectedShell: {fileID: 1511667219575325440, guid: cb97147bab932184fbec439ee0a3decd, type: 3}
@@ -479,8 +515,38 @@ Transform:
   m_LocalPosition: {x: 0.735, y: 0.212, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6830227032887586128}
+  m_Children: []
   m_Father: {fileID: 6669453564822610227}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8389215646095952819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7278196836445411021}
+  m_Layer: 0
+  m_Name: ProjectileSpawn (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7278196836445411021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389215646095952819}
+  m_LocalRotation: {x: -0, y: -0, z: 0.05211591, w: 0.9986411}
+  m_LocalPosition: {x: 0.735, y: 0.212, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6669453564822610227}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 5.975}
