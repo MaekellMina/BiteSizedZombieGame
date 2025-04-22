@@ -49,10 +49,11 @@ public class ForestGenerator : MonoBehaviour
     [Range(0f, 1f)] public float pathThreshold = 0.2f;
     [Range(0f, 1f)] public float waterThreshold = 0.2f;
 
-    [Header("Cluster Injection")]
-    public List<ClusterData> clustersToInject;
+   // [Header("Cluster Injection")]
+   // public List<ClusterData> clustersToInject;
 
     private HashSet<Vector3Int> canopyPositions = new();
+    [SerializeField]
     private List<GameObject> allGameObjects = new();
 
     private int terrainOffsetX, terrainOffsetY;
@@ -98,7 +99,7 @@ public class ForestGenerator : MonoBehaviour
         groundMap.ClearAllTiles();
         objectMap.ClearAllTiles();
 
-        InjectClusters();
+        //InjectClusters();
 
         GenerateWater();
         GenerateForests();
@@ -169,7 +170,6 @@ public class ForestGenerator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector3Int pos = new(x, y, 0);
-
                
                 if (canopyPositions.Contains(pos)) continue;
 
@@ -187,37 +187,37 @@ public class ForestGenerator : MonoBehaviour
     }
 
 
-    private void InjectClusters()
-    {
-        foreach (var cluster in clustersToInject)
-        {
-            if (cluster.clusterPrefab == null) continue;
+    //private void InjectClusters()
+    //{
+    //    foreach (var cluster in clustersToInject)
+    //    {
+    //        if (cluster.clusterPrefab == null) continue;
 
-            GameObject temp = Instantiate(cluster.clusterPrefab);
-            Tilemap clusterMap = temp.GetComponentInChildren<Tilemap>();
-            if (!clusterMap)
-            {
-                DestroyImmediate(temp);
-                continue;
-            }
+    //        GameObject temp = Instantiate(cluster.clusterPrefab);
+    //        Tilemap clusterMap = temp.GetComponentInChildren<Tilemap>();
+    //        if (!clusterMap)
+    //        {
+    //            DestroyImmediate(temp);
+    //            continue;
+    //        }
 
-            BoundsInt bounds = clusterMap.cellBounds;
-            TileBase[] tiles = clusterMap.GetTilesBlock(bounds);
+    //        BoundsInt bounds = clusterMap.cellBounds;
+    //        TileBase[] tiles = clusterMap.GetTilesBlock(bounds);
 
-            for (int x = 0; x < bounds.size.x; x++)
-                for (int y = 0; y < bounds.size.y; y++)
-                {
-                    TileBase tile = tiles[x + y * bounds.size.x];
-                    if (tile == null) continue;
+    //        for (int x = 0; x < bounds.size.x; x++)
+    //            for (int y = 0; y < bounds.size.y; y++)
+    //            {
+    //                TileBase tile = tiles[x + y * bounds.size.x];
+    //                if (tile == null) continue;
 
-                    Vector3Int local = new(x, y, 0);
-                    Vector3Int target = new(cluster.position.x + local.x, cluster.position.y + local.y, 0);
-                    groundMap.SetTile(target, tile);
-                }
+    //                Vector3Int local = new(x, y, 0);
+    //                Vector3Int target = new(cluster.position.x + local.x, cluster.position.y + local.y, 0);
+    //                groundMap.SetTile(target, tile);
+    //            }
 
-            DestroyImmediate(temp);
-        }
-    }
+    //        DestroyImmediate(temp);
+    //    }
+    //}
 
     private float GetNoise(int x, int y, float scale)
     {
