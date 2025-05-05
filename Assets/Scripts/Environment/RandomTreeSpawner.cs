@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using PrimeTween;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ public class RandomTreeSpawner : MonoBehaviour
         originalAlpha = tressRenderer.color.a;
     }
 
+    [Button]
     public void RandomizeSetUp()
     {
         tressRenderer.sprite = PossibleTrees[Random.Range(0, PossibleTrees.Count)];
