@@ -29,9 +29,9 @@ public class PipeConnectorFixed : PuzzleWrapper
        
           
     }
-    public override void DisconnectPiece(DIRECTIONS dir)
+    public override void DisconnectDirection(DIRECTIONS dir)
     {
-        base.DisconnectPiece(dir);
+        base.DisconnectDirection(dir);
         if (ConnectedPoints.Count <= 0)
         {
 

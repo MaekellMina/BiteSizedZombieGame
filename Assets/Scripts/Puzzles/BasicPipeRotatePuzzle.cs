@@ -125,30 +125,34 @@ public class BasicPipeRotatePuzzle : PuzzleWrapper
     {
         for (int i = 0; i < NeigboringPieces.Count; i++)
         {
-            var neighborInThatDirection = NeigboringPieces[i];
-        
-            if (neighborInThatDirection.Neighbor == null)
-                continue;
-                   
-            if(EntryPoints.Contains(neighborInThatDirection.Direction) == false)
-            {
-                neighborInThatDirection.Neighbor.DisconnectPiece(neighborInThatDirection.Direction.GetOpposite());
-                DisconnectPiece(neighborInThatDirection.Direction);
-                continue;
-            }
-         
-            foreach (var _EntryPoints in EntryPoints)
-            {
-                if(neighborInThatDirection.Direction.ToVector() + _EntryPoints.ToVector() == Vector2.zero ) // means the direction should connect
-                {
-                    ConnectDirection(neighborInThatDirection.Direction);
-                    neighborInThatDirection.Neighbor.ConnectDirection(_EntryPoints);
-                    continue;
-                }
-                             
-            }
-                     
+            var neighbor = NeigboringPieces[i];
+            var dir = neighbor.Direction;
+            var oppDir = dir.GetOpposite();
+            var neighborPiece = neighbor.Neighbor;
 
+            if (neighborPiece == null || !EntryPoints.Contains(dir))
+            {
+                neighborPiece?.DisconnectDirection(oppDir);
+                DisconnectDirection(dir);
+                continue;
+            }
+
+            bool connects = false;
+            foreach (var _NeighborEntryPoint in neighborPiece.EntryPoints)
+            {
+                if (dir.ToVector() + _NeighborEntryPoint.ToVector() == Vector2.zero) // means the direction should connect
+                {
+                    ConnectDirection(dir);
+                    neighborPiece.ConnectDirection(_NeighborEntryPoint);
+                    connects = true;
+                    break;
+                }
+            }
+            if (!connects)
+            {
+                neighborPiece.DisconnectDirection(oppDir);
+                DisconnectDirection(dir);
+            }
         }
 
         e_OnCheck?.Invoke();

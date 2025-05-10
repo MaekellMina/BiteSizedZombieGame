@@ -27,12 +27,31 @@ public class PipePuzzleManager : MonoBehaviour
 
     public void CheckIfDone()
     {
+        bool goalConnected = FindGoalFrom(from, from.EntryPoints[0].GetOpposite());
        //done
-            E_OnPuzzleEnd?.Invoke();
-       // else
-         //   E_OnPuzzleReset?.Invoke();
+       if(goalConnected)
+        E_OnPuzzleEnd?.Invoke();
+       else
+         E_OnPuzzleReset?.Invoke();
     }
 
-   
+    private bool FindGoalFrom(PuzzleWrapper pipe, DIRECTIONS entryDir)
+    {
+        List<bool> goalConnected = new List<bool>();
+        if (pipe.ConnectedPoints.Count > 1 || pipe == from)   //if connectedpoints count is >= 1, it means dead end -- unless it's the starting point
+        {
+            foreach(var connectedDir in pipe.ConnectedPoints)
+            {
+                if (connectedDir == entryDir)
+                    continue;
+
+                PuzzleWrapper connectedPipe = pipe.GetNeighborPiece(connectedDir);
+                goalConnected.Add(FindGoalFrom(connectedPipe, connectedDir.GetOpposite()));
+                
+            }
+        }
+
+        return pipe == Goal || (goalConnected.Count > 0 && goalConnected.Any(x=>x));
+    }
     
 }

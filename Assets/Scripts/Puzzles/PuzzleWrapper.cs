@@ -29,7 +29,7 @@ public class PuzzleWrapper: MonoBehaviour
     }
 
   
-    public virtual void DisconnectPiece(DIRECTIONS dir)
+    public virtual void DisconnectDirection(DIRECTIONS dir)
     {
         if (ConnectedPoints.Contains(dir))
             ConnectedPoints.Remove(dir);
@@ -57,6 +57,10 @@ public class PuzzleWrapper: MonoBehaviour
         e_OnCheck?.Invoke();
     }
 
+    public PuzzleWrapper GetNeighborPiece(DIRECTIONS dir)
+    {
+        return NeigboringPieces.FirstOrDefault(x => x.Direction == dir).Neighbor;
+    }
 
    
 
