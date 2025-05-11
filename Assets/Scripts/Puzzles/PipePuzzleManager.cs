@@ -22,7 +22,7 @@ public class PipePuzzleManager : MonoBehaviour
     {
         for (int i = 0; i < Pieces.Count; i++)
         {
-            Pieces[i].e_OnCheck = CheckIfDone;
+            Pieces[i].e_OnCheck.AddListener(CheckIfDone);
         }
     }
 

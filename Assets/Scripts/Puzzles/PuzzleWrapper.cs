@@ -12,7 +12,7 @@ public class PuzzleWrapper: MonoBehaviour
     [SerializeField]
     public List<DIRECTIONS> ConnectedPoints = new List<DIRECTIONS>();
 
-    public UnityAction e_OnCheck;
+    public UnityEvent e_OnCheck = new UnityEvent();
 
     public List<PuzzleNeighbor> NeigboringPieces = new List<PuzzleNeighbor>()
     {
@@ -22,7 +22,11 @@ public class PuzzleWrapper: MonoBehaviour
         new PuzzleNeighbor(DIRECTIONS.WEST)
     };
 
-  
+    private void Start()
+    {
+
+    }
+
     public List<DIRECTIONS> GetEntryPoints()
     {
         return EntryPoints;
@@ -62,9 +66,14 @@ public class PuzzleWrapper: MonoBehaviour
         return NeigboringPieces.FirstOrDefault(x => x.Direction == dir).Neighbor;
     }
 
-   
+
+
 
 #if UNITY_EDITOR
+    private void OnValidate()
+    {
+        AutoLinkNeighbors();
+    }
     [Button]
     public void AutoLinkNeighbors(float tileSize = 1f)
     {

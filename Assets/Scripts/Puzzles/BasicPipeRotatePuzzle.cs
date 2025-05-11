@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 [System.Serializable]
 ///Directions up clockwise
 public enum DIRECTIONS
@@ -65,7 +66,7 @@ public class PuzzleNeighbor
         Neighbor = neighbor;
     }
 }
-public class BasicPipeRotatePuzzle : PuzzleWrapper
+public class BasicPipeRotatePuzzle : PuzzleWrapper,IInteractable
 {
    
     [System.Serializable]
@@ -158,5 +159,31 @@ public class BasicPipeRotatePuzzle : PuzzleWrapper
         e_OnCheck?.Invoke();
     }
 
-    
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("HERE");
+            InteractionManager.instance.Register(this);
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            InteractionManager.instance.Register(this);
+        }
+    }
+
+    public void OnInteract()
+    {
+        Debug.Log($"Attempt rotate {gameObject.name}");
+        Rotate();
+    }
+
+    public GameObject GetTargetObject() => gameObject;
+
+  
 }

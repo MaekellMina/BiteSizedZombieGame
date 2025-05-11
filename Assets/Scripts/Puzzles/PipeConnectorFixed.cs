@@ -15,7 +15,7 @@ public class PipeConnectorFixed : PuzzleWrapper
     public UnityEvent E_OnConnected = new UnityEvent();
     public UnityEvent E_OnDisconnect = new UnityEvent();
 
- 
+  
     public override void ConnectDirection(DIRECTIONS dir)
     {
         base.ConnectDirection(dir);
