@@ -22,7 +22,7 @@ public class InteractableObject : MonoBehaviour,IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            InteractionManager.instance.Register(this);
+            InteractionManager.instance.Unregister(this);
         }
     }
 

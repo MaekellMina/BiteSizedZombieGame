@@ -36,10 +36,15 @@ public class InteractionManager : MonoBehaviour
 
     private void _interactAxn_started(InputAction.CallbackContext obj)
     {
-        if (currentInteractable != null && Vector2.Distance(TargetObject.transform.position, playerTransform.position) < 1f)
+        if (currentInteractable != null && Vector2.Distance(TargetObject.transform.position, playerTransform.position) <= 1f)
+        {
+            Debug.Log("INTERACTION ATTEMPT");
             currentInteractable.OnInteract();
+
+        }           
         else
         {
+            Debug.Log($"too far{Vector2.Distance(TargetObject.transform.position, playerTransform.position)}");
             EPrompt.gameObject.SetActive(false);
             currentInteractable = null;
             TargetObject = null;

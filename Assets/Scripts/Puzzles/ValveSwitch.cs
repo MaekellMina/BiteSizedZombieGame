@@ -11,13 +11,12 @@ public class ValveSwitch : MonoBehaviour,IInteractable
     public UnityEvent onValveOn;
     public UnityEvent onValveOff;
     public UnityEvent e_OnInteractFeedback;
+    public float feedbackDelay = 0.2f;
 
-    [Header("Optional")]
-    public bool toggleOnClick = true;
-
+    public
     bool isInteracting = false;
     Coroutine InteractionFeedbackRoutine;
-    public void ToggleValve()
+    public void ToggleSwitch()
     {
         SetValve(!isOn);
     }
@@ -38,6 +37,7 @@ public class ValveSwitch : MonoBehaviour,IInteractable
     {
         if (isInteracting) return;
 
+        Debug.Log("INTERACT");
         isInteracting = true;
         if (InteractionFeedbackRoutine != null)
             StopCoroutine(InteractionFeedbackRoutine);
@@ -48,8 +48,8 @@ public class ValveSwitch : MonoBehaviour,IInteractable
     IEnumerator FeedBackBefore()
     {
         e_OnInteractFeedback?.Invoke();
-        yield return new WaitForSeconds(.2f);
-        ToggleValve();
+        yield return new WaitForSeconds(feedbackDelay);
+        ToggleSwitch();
         isInteracting = false;
     }
     public GameObject GetTargetObject()
@@ -71,7 +71,8 @@ public class ValveSwitch : MonoBehaviour,IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            InteractionManager.instance.Register(this);
+            isInteracting = false;
+            InteractionManager.instance.Unregister(this);
         }
     }
 }

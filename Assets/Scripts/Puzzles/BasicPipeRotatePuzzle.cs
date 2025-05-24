@@ -173,7 +173,7 @@ public class BasicPipeRotatePuzzle : PuzzleWrapper,IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            InteractionManager.instance.Register(this);
+            InteractionManager.instance.Unregister(this);
         }
     }
 
