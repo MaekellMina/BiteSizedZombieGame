@@ -171,7 +171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5080360616689884606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.194, y: -0.163, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -252,7 +252,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2018085932, guid: 44752460a95a69b4e8dfb6f3690081bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -402,7 +402,7 @@ Transform:
   m_GameObject: {fileID: 6669453564822610226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.42, y: 0.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3326971309996710925}
@@ -424,12 +424,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireMode: 0
+  inaccuracyAngle: 5
   projectileSpawns:
   - {fileID: 6669453564904565712}
   projectile: {fileID: 3887114011074299737, guid: 83b03f67fceeb24418561fe9da69586d, type: 3}
   msBetweenShots: 350
   muzzleVelocity: 100
   burstCount: 0
+  magazineSize: 6
+  reloadTime: 1
+  kickMinMax: {x: 0.5, y: 2.5}
+  recoilAngleMinMax: {x: 4, y: 20}
+  recoilMoveSettleTime: 0.15
+  recoilRotationSettleTime: 0.1
   ejectedShell: {fileID: 1511667219575325440, guid: cb97147bab932184fbec439ee0a3decd, type: 3}
   shellEjection: {fileID: 2276720818088533560}
 --- !u!114 &8568404200764266677

@@ -40,6 +40,7 @@ public class PlayerController : LivingEntity
     private InputAction _aimPointerAction;
     private InputAction _runAction;
     private InputAction _fireAction;
+    private InputAction _reloadAction;
 
     //other components
     private Stamina stamina;
@@ -64,6 +65,7 @@ public class PlayerController : LivingEntity
         _aimPointerAction = gameplay["AimPointer"];
         _runAction = gameplay["Run"];
         _fireAction = gameplay["Fire"];
+        _reloadAction = gameplay["Reload"];
 
 
         //fsm stufff
@@ -103,6 +105,7 @@ public class PlayerController : LivingEntity
         //weapon input:
         _fireAction.canceled += weaponController.OnTriggerRelease;
         _fireAction.Enable();
+        _reloadAction.Enable();
         //===
 
         weaponController.e_OnEquipWeapon.AddListener(UpdateItemOnHand);
@@ -117,6 +120,7 @@ public class PlayerController : LivingEntity
         //weapon input:
         _fireAction.canceled -= weaponController.OnTriggerRelease;
         _fireAction.Disable();
+        _reloadAction.Disable();
         //===
 
         weaponController.e_OnEquipWeapon.RemoveListener(UpdateItemOnHand);
@@ -180,6 +184,10 @@ public class PlayerController : LivingEntity
         if(_fireAction.IsPressed())
         {
             weaponController.OnTriggerHold();
+        }
+        if(_reloadAction.triggered)
+        {
+            weaponController.Reload();
         }
         //===
     }
