@@ -32,7 +32,11 @@ namespace cc.Interaction.SO
         {
             Debug.Log($"attempt to raise {Interactable.name} {currentInteractable}");
             if(currentInteractable!=null)
-             interact_listeners?.Invoke(Interactable);
+            {
+                Debug.Log($"Success");
+                interact_listeners?.Invoke(Interactable);
+            }
+             
         }
 
         public void RegisterListener(UnityAction<GameObject> listener)
@@ -72,6 +76,7 @@ namespace cc.Interaction.SO
             interactionPrompt.gameObject.SetActive(false);
         }
 
+        public bool IsMyPlayer(GameObject Player) => Player == CurrentPlayer;
     }
 
 

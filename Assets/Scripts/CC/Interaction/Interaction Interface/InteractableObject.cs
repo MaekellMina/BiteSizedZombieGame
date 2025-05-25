@@ -14,7 +14,7 @@ namespace cc.Interaction.Interface
         {
             if (collision.CompareTag("Player"))
             {
-                InteractionManager.instance.Register(this);
+                InteractionManager.instance?.Register(this);
             }
         }
 
@@ -22,7 +22,7 @@ namespace cc.Interaction.Interface
         {
             if (collision.CompareTag("Player"))
             {
-                InteractionManager.instance.Unregister(this);
+                InteractionManager.instance?.Unregister(this);
             }
         }
 

@@ -66,25 +66,28 @@ public class PuzzleNeighbor
         Neighbor = neighbor;
     }
 }
-public class BasicPipeRotatePuzzle : PuzzleWrapper,IInteractable
+
+namespace cc.Interaction
 {
-   
-    [System.Serializable]
-    public class RotatePuzzlePiece
+    public class BasicPipeRotatePuzzle : PuzzleWrapper, IInteractable
     {
-        public DIRECTIONS direction;
-        public Sprite puzzleSprite;
-        public List<DIRECTIONS> ConnectionPoint = new List<DIRECTIONS>();
-        public RotatePuzzlePiece(DIRECTIONS direction)
+
+        [System.Serializable]
+        public class RotatePuzzlePiece
         {
-            this.direction = direction;
+            public DIRECTIONS direction;
+            public Sprite puzzleSprite;
+            public List<DIRECTIONS> ConnectionPoint = new List<DIRECTIONS>();
+            public RotatePuzzlePiece(DIRECTIONS direction)
+            {
+                this.direction = direction;
+            }
         }
-    }
 
-    [SerializeField]
-    SpriteRenderer pieceSprite;
+        [SerializeField]
+        SpriteRenderer pieceSprite;
 
-    public List<RotatePuzzlePiece> PuzzlePieces = new List<RotatePuzzlePiece>()
+        public List<RotatePuzzlePiece> PuzzlePieces = new List<RotatePuzzlePiece>()
     {
         new RotatePuzzlePiece(DIRECTIONS.NORTH),
         new RotatePuzzlePiece(DIRECTIONS.EAST),
@@ -92,98 +95,100 @@ public class BasicPipeRotatePuzzle : PuzzleWrapper,IInteractable
         new RotatePuzzlePiece(DIRECTIONS.WEST)
     };
 
- 
 
 
-    [SerializeField]
-    DIRECTIONS CurrentDirection = DIRECTIONS.NORTH;
 
-    private void Start()
-    {
-      
-        pieceSprite.sprite = PuzzlePieces[(int)CurrentDirection].puzzleSprite;
-        EntryPoints = PuzzlePieces[(int)CurrentDirection].ConnectionPoint;      
-     
+        [SerializeField]
+        DIRECTIONS CurrentDirection = DIRECTIONS.NORTH;
 
-        Check();
-    }
-
-    [Button]
-    public void Rotate()
-    {
-        var idx = (int)CurrentDirection;
-        idx = (idx+1) % PuzzlePieces.Count ;
-        //Debug.Log(idx);
-        CurrentDirection = (DIRECTIONS)idx;
-        pieceSprite.sprite = PuzzlePieces[idx].puzzleSprite;
-        EntryPoints = PuzzlePieces[idx].ConnectionPoint;
-
-        Check();
-
-    }
-
-    public override void Check()
-    {
-        for (int i = 0; i < NeigboringPieces.Count; i++)
+        private void Start()
         {
-            var neighbor = NeigboringPieces[i];
-            var dir = neighbor.Direction;
-            var oppDir = dir.GetOpposite();
-            var neighborPiece = neighbor.Neighbor;
 
-            if (neighborPiece == null || !EntryPoints.Contains(dir))
-            {
-                neighborPiece?.DisconnectDirection(oppDir);
-                DisconnectDirection(dir);
-                continue;
-            }
+            pieceSprite.sprite = PuzzlePieces[(int)CurrentDirection].puzzleSprite;
+            EntryPoints = PuzzlePieces[(int)CurrentDirection].ConnectionPoint;
 
-            bool connects = false;
-            foreach (var _NeighborEntryPoint in neighborPiece.EntryPoints)
+
+            Check();
+        }
+
+        [Button]
+        public void Rotate()
+        {
+            var idx = (int)CurrentDirection;
+            idx = (idx + 1) % PuzzlePieces.Count;
+            //Debug.Log(idx);
+            CurrentDirection = (DIRECTIONS)idx;
+            pieceSprite.sprite = PuzzlePieces[idx].puzzleSprite;
+            EntryPoints = PuzzlePieces[idx].ConnectionPoint;
+
+            Check();
+
+        }
+
+        public override void Check()
+        {
+            for (int i = 0; i < NeigboringPieces.Count; i++)
             {
-                if (dir.ToVector() + _NeighborEntryPoint.ToVector() == Vector2.zero) // means the direction should connect
+                var neighbor = NeigboringPieces[i];
+                var dir = neighbor.Direction;
+                var oppDir = dir.GetOpposite();
+                var neighborPiece = neighbor.Neighbor;
+
+                if (neighborPiece == null || !EntryPoints.Contains(dir))
                 {
-                    ConnectDirection(dir);
-                    neighborPiece.ConnectDirection(_NeighborEntryPoint);
-                    connects = true;
-                    break;
+                    neighborPiece?.DisconnectDirection(oppDir);
+                    DisconnectDirection(dir);
+                    continue;
+                }
+
+                bool connects = false;
+                foreach (var _NeighborEntryPoint in neighborPiece.EntryPoints)
+                {
+                    if (dir.ToVector() + _NeighborEntryPoint.ToVector() == Vector2.zero) // means the direction should connect
+                    {
+                        ConnectDirection(dir);
+                        neighborPiece.ConnectDirection(_NeighborEntryPoint);
+                        connects = true;
+                        break;
+                    }
+                }
+                if (!connects)
+                {
+                    neighborPiece.DisconnectDirection(oppDir);
+                    DisconnectDirection(dir);
                 }
             }
-            if (!connects)
+
+            e_OnCheck?.Invoke();
+        }
+
+
+        public void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
             {
-                neighborPiece.DisconnectDirection(oppDir);
-                DisconnectDirection(dir);
+                Debug.Log("HERE");
+                InteractionManager.instance?.Register(this);
             }
         }
 
-        e_OnCheck?.Invoke();
-    }
-
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        public void OnTriggerExit2D(Collider2D collision)
         {
-            Debug.Log("HERE");
-            InteractionManager.instance?.Register(this);
+            if (collision.CompareTag("Player"))
+            {
+                InteractionManager.instance?.Unregister(this);
+            }
         }
-    }
 
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        public void OnInteract()
         {
-            InteractionManager.instance?.Unregister(this);
+            Debug.Log($"Attempt rotate {gameObject.name}");
+            Rotate();
         }
+
+        public GameObject GetTargetObject() => gameObject;
+
+
     }
 
-    public void OnInteract()
-    {
-        Debug.Log($"Attempt rotate {gameObject.name}");
-        Rotate();
-    }
-
-    public GameObject GetTargetObject() => gameObject;
-
-  
 }

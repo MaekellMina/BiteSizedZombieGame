@@ -1,108 +1,107 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using cc.Interaction;
 using cc.Interaction.Interface;
 
-public class DoorTeleport : MonoBehaviour,IInteractable
+namespace cc.Interaction
 {
-    public Sprite closedSprite;
-    public Sprite openSprite;
-    public bool isOpen = false;
-    public Transform teleportTarget;          
-    public bool autoTeleport = false;         
 
-    private SpriteRenderer spriteRenderer;
-    private bool playerInRange = false;
-    [SerializeField]
-    private Transform player;
-
-    public bool isSinglePlayer = false;
-  
-    void Start()
+    public class DoorTeleport : MonoBehaviour, IInteractable
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        UpdateDoorVisual();
-    }
+        public Sprite closedSprite;
+        public Sprite openSprite;
+        public bool isOpen = false;
+        public Transform teleportTarget;
+        public bool autoTeleport = false;
 
-   
-    void Interact()
-    {
-        InteractionManager.instance?.Unregister(this);
-        Debug.Log($"TP {gameObject.name} {teleportTarget.transform.gameObject.name}");
-        ToggleDoor();
-        TeleportPlayer();
-    }
+        private SpriteRenderer spriteRenderer;
+        private bool playerInRange = false;
+        [SerializeField]
+        private Transform player;
 
-    void ToggleDoor()
-    {
-        isOpen = !isOpen;
-        UpdateDoorVisual();
+        public bool isSinglePlayer = false;
 
-        // Optional: disable collider when door is open
-        //Collider2D col = GetComponent<Collider2D>();
-        //if (col != null)
-        //    col.enabled = !isOpen;
-    }
-
-    void TeleportPlayer()
-    {
-        if (isSinglePlayer)
-            player = InteractionManager.instance.playerTransform;
-
-        if (player != null && teleportTarget != null)
+        void Start()
         {
-            var target = player;
-            target.transform.position = teleportTarget.position;
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            UpdateDoorVisual();
         }
-    }
-
-    void UpdateDoorVisual()
-    {
-        if (spriteRenderer != null)
-            spriteRenderer.sprite = isOpen ? openSprite : closedSprite;
-    }
 
 
-   
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        void Interact()
         {
-            player = other.transform;
-            playerInRange = true;
+            InteractionManager.instance?.Unregister(this);
+            Debug.Log($"TP {gameObject.name} {teleportTarget.transform.gameObject.name}");
+            ToggleDoor();
+            TeleportPlayer();
+        }
 
+        void ToggleDoor()
+        {
+            isOpen = !isOpen;
+            UpdateDoorVisual();
 
+        }
+
+        void TeleportPlayer()
+        {
             if (isSinglePlayer)
-                InteractionManager.instance?.Register(this);
+                player = InteractionManager.instance?.playerTransform;
 
-            if (autoTeleport)
+            if (player != null && teleportTarget != null)
+            {
+                var target = player;
+                target.transform.position = teleportTarget.position;
+            }
+        }
+
+        void UpdateDoorVisual()
+        {
+            if (spriteRenderer != null)
+                spriteRenderer.sprite = isOpen ? openSprite : closedSprite;
+        }
+
+
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                player = other.transform;
+                playerInRange = true;
+
+
+                if (isSinglePlayer)
+                    InteractionManager.instance?.Register(this);
+
+                if (autoTeleport)
+                    Interact();
+            }
+        }
+
+        void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                playerInRange = false;
+                player = null;
+
+                if (isSinglePlayer)
+                    InteractionManager.instance?.Unregister(this);
+            }
+        }
+
+        public void OnInteract()
+        {
+            if (playerInRange && !autoTeleport)
+            {
                 Interact();
+            }
         }
-    }
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        public GameObject GetTargetObject()
         {
-            playerInRange = false;
-            player = null ;
-
-            if (isSinglePlayer)
-                InteractionManager.instance?.Unregister(this);
+            return this.gameObject;
         }
-    }
-
-    public void OnInteract()
-    {
-        if (playerInRange && !autoTeleport)
-        {
-            Interact();
-        }
-    }
-
-    public GameObject GetTargetObject()
-    {
-        return this.gameObject;
     }
 }

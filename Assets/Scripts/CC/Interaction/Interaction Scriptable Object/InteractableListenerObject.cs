@@ -2,57 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using cc.Interaction.Interface;
 using NaughtyAttributes;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace cc.Interaction.SO
 {
 
-    [System.Serializable]
-    public class PlayerInteractionSet
-    {
-        public InteractionSignalSO interactionSignal;
-        public GameObject Player => interactionSignal.CurrentPlayer;
-        public void RegisterListener(UnityAction<GameObject> listener) => interactionSignal.RegisterListener(listener);
-        public void UnregisterListener(UnityAction<GameObject> listener) => interactionSignal.UnregisterListener(listener);
-
-        public bool IsMyPlayer(GameObject player)
-        {
-            return player == Player;
-        }
-
-    }
+    [RequireComponent(typeof(BoxCollider2D))]
     public class InteractableListenerObject : MonoBehaviour
     {
-        public List<PlayerInteractionSet> interactionSignals = new List<PlayerInteractionSet>();
-
-     
+        public List<InteractionSignalSO> interactionSignals = new List<InteractionSignalSO>();
 
         [Space]
         [SerializeField]
         private bool UseAttachedInteractable = true;
-        IInteractable AttachedInteractable;
+
         [Space]
-        [HideIf("UseAttachedInteractable")]
+        //[HideIf("UseAttachedInteractable")]
         public UnityEvent<GameObject> OnInteract = new UnityEvent<GameObject>();
+
+        [Header("DEBUG")]
+        [SerializeField]
+        [ReadOnly]
+        MonoBehaviour AttachedInteractable;
 
         private void Awake()
         {
             if (UseAttachedInteractable)
             {
-                AttachedInteractable = GetComponent<IInteractable>();
+             //   AttachedInteractable = GetComponent<IInteractable>();
                 UseAttachedInteractable = (AttachedInteractable != null);
             }
         }
 
         private void OnEnable()
-        {
-            if (UseAttachedInteractable)
-            {
-                OnInteract.RemoveAllListeners();
-                OnInteract.AddListener( (x)=> { AttachedInteractable.OnInteract(); });
-            }
-                if (interactionSignals.Count > 0)
+        {           
+
+            if (interactionSignals.Count > 0)
                 for (int i = 0; i < interactionSignals.Count; i++)
                 {
                     interactionSignals[i].RegisterListener(HandleInteraction);
@@ -62,11 +50,7 @@ namespace cc.Interaction.SO
         }
 
         private void OnDisable()
-        {
-            if (UseAttachedInteractable)
-            {
-                OnInteract.RemoveAllListeners();   
-            }
+        {          
 
             if (interactionSignals.Count > 0)
                 for (int i = 0; i < interactionSignals.Count; i++)
@@ -78,21 +62,12 @@ namespace cc.Interaction.SO
 
         private void HandleInteraction(GameObject Interactable)
         {
-            if(Interactable == this.gameObject)
-               OnInteract?.Invoke(this.gameObject);
+            if (Interactable != this.gameObject) return;
+                OnInteract?.Invoke(this.gameObject);
+
         } 
 
-        private bool IsPlayerInRange(GameObject player)
-        {
-            for (int i = 0; i < interactionSignals.Count; i++)
-            {
-                if (interactionSignals[i].IsMyPlayer(player))
-                    return true;
-
-            }
-            return false;
-        }
-
+     
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.tag == "Player")
@@ -100,8 +75,7 @@ namespace cc.Interaction.SO
                 for (int i = 0; i < interactionSignals.Count; i++)
                 {
                     if (interactionSignals[i].IsMyPlayer(other.gameObject))
-                        interactionSignals[i].interactionSignal.SetCurrentInteractable(this.gameObject);
-
+                        interactionSignals[i].SetCurrentInteractable(this.gameObject);
                 }
             }
            
@@ -114,12 +88,60 @@ namespace cc.Interaction.SO
                 for (int i = 0; i < interactionSignals.Count; i++)
                 {
                     if (interactionSignals[i].IsMyPlayer(other.gameObject))
-                        interactionSignals[i].interactionSignal.ClearCurrentInteractable(this.gameObject);
+                        interactionSignals[i].ClearCurrentInteractable(this.gameObject);
 
                 }
             }
 
         }
+
+        void TriggerInteractable(GameObject g)
+        {
+            var att = AttachedInteractable as IInteractable;
+            att?.OnInteract();
+        }
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (UseAttachedInteractable)
+            {
+                var components = GetComponents<MonoBehaviour>();
+                foreach (var comp in components)
+                {
+                    if (comp is IInteractable interactable)
+                    {
+                        AttachedInteractable = comp;
+                        break;
+                    }
+                }
+
+                if (AttachedInteractable == null) return;
+                if (!EventContainsMethod(OnInteract, this, nameof(TriggerInteractable)))
+                {
+                    UnityEditor.Events.UnityEventTools.AddPersistentListener(OnInteract, TriggerInteractable);
+                    EditorUtility.SetDirty(this);
+                }
+            }
+
+
+        }
+
+        private bool EventContainsMethod(UnityEvent<GameObject> evt, Object target, string methodName)
+        {
+            int count = evt.GetPersistentEventCount();
+            for (int i = 0; i < count; i++)
+            {
+                if (evt.GetPersistentTarget(i) == target &&
+                    evt.GetPersistentMethodName(i) == methodName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+#endif
+
+       
     }
 
 }
