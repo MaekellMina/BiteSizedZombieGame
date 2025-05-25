@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using cc.Interaction.Interface;
+using NaughtyAttributes;
 
 namespace cc.Interaction.SO
 {
- [System.Serializable]
- public class PlayerInteractionSet
-    {       
+
+    [System.Serializable]
+    public class PlayerInteractionSet
+    {
         public InteractionSignalSO interactionSignal;
         public GameObject Player => interactionSignal.CurrentPlayer;
         public void RegisterListener(UnityAction<GameObject> listener) => interactionSignal.RegisterListener(listener);
@@ -23,16 +26,33 @@ namespace cc.Interaction.SO
     {
         public List<PlayerInteractionSet> interactionSignals = new List<PlayerInteractionSet>();
 
-        [System.Serializable]
-        public class PlayerInteractEvent : UnityEvent<GameObject> { }
+     
 
-        public PlayerInteractEvent OnInteract;
+        [Space]
+        [SerializeField]
+        private bool UseAttachedInteractable = true;
+        IInteractable AttachedInteractable;
+        [Space]
+        [HideIf("UseAttachedInteractable")]
+        public UnityEvent<GameObject> OnInteract = new UnityEvent<GameObject>();
 
-
+        private void Awake()
+        {
+            if (UseAttachedInteractable)
+            {
+                AttachedInteractable = GetComponent<IInteractable>();
+                UseAttachedInteractable = (AttachedInteractable != null);
+            }
+        }
 
         private void OnEnable()
         {
-            if (interactionSignals.Count > 0)
+            if (UseAttachedInteractable)
+            {
+                OnInteract.RemoveAllListeners();
+                OnInteract.AddListener( (x)=> { AttachedInteractable.OnInteract(); });
+            }
+                if (interactionSignals.Count > 0)
                 for (int i = 0; i < interactionSignals.Count; i++)
                 {
                     interactionSignals[i].RegisterListener(HandleInteraction);
@@ -43,6 +63,11 @@ namespace cc.Interaction.SO
 
         private void OnDisable()
         {
+            if (UseAttachedInteractable)
+            {
+                OnInteract.RemoveAllListeners();   
+            }
+
             if (interactionSignals.Count > 0)
                 for (int i = 0; i < interactionSignals.Count; i++)
                 {

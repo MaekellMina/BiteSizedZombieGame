@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace cc.Interaction.Interface
+namespace cc.Interaction
 {
     public interface IInteractable
     {

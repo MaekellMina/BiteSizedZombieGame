@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using cc.Interaction;
 using cc.Interaction.Interface;
 
 public class DoorTeleport : MonoBehaviour,IInteractable
