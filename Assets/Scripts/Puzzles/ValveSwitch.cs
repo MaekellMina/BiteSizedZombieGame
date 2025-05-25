@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-
+using cc.Interaction.Interface;
 public class ValveSwitch : MonoBehaviour,IInteractable
 {
     [Header("Valve State")]
@@ -63,7 +63,7 @@ public class ValveSwitch : MonoBehaviour,IInteractable
     {
         if (collision.CompareTag("Player"))
         {          
-            InteractionManager.instance.Register(this);
+            InteractionManager.instance?.Register(this);
         }
     }
 
@@ -72,7 +72,7 @@ public class ValveSwitch : MonoBehaviour,IInteractable
         if (collision.CompareTag("Player"))
         {
             isInteracting = false;
-            InteractionManager.instance.Unregister(this);
+            InteractionManager.instance?.Unregister(this);
         }
     }
 }

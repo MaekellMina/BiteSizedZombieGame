@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using cc.Interaction.Interface;
 
 [System.Serializable]
 ///Directions up clockwise
@@ -165,7 +165,7 @@ public class BasicPipeRotatePuzzle : PuzzleWrapper,IInteractable
         if (collision.CompareTag("Player"))
         {
             Debug.Log("HERE");
-            InteractionManager.instance.Register(this);
+            InteractionManager.instance?.Register(this);
         }
     }
 
@@ -173,7 +173,7 @@ public class BasicPipeRotatePuzzle : PuzzleWrapper,IInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            InteractionManager.instance.Unregister(this);
+            InteractionManager.instance?.Unregister(this);
         }
     }
 

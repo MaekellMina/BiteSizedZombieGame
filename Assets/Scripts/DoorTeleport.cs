@@ -1,34 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using cc.Interaction.Interface;
 
 public class DoorTeleport : MonoBehaviour,IInteractable
 {
     public Sprite closedSprite;
     public Sprite openSprite;
     public bool isOpen = false;
-    public Transform teleportTarget;          // Where the player gets teleported
-    public bool autoTeleport = false;         // If true, teleport on enter without key press
+    public Transform teleportTarget;          
+    public bool autoTeleport = false;         
 
     private SpriteRenderer spriteRenderer;
     private bool playerInRange = false;
     [SerializeField]
     private Transform player;
 
+    public bool isSinglePlayer = false;
+  
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         UpdateDoorVisual();
     }
 
-    void Update()
-    {
-       
-    }
-
+   
     void Interact()
     {
-        InteractionManager.instance.Unregister(this);
+        InteractionManager.instance?.Unregister(this);
         Debug.Log($"TP {gameObject.name} {teleportTarget.transform.gameObject.name}");
         ToggleDoor();
         TeleportPlayer();
@@ -40,17 +39,20 @@ public class DoorTeleport : MonoBehaviour,IInteractable
         UpdateDoorVisual();
 
         // Optional: disable collider when door is open
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null)
-            col.enabled = !isOpen;
+        //Collider2D col = GetComponent<Collider2D>();
+        //if (col != null)
+        //    col.enabled = !isOpen;
     }
 
     void TeleportPlayer()
     {
-        player = InteractionManager.instance.playerTransform;
+        if (isSinglePlayer)
+            player = InteractionManager.instance.playerTransform;
+
         if (player != null && teleportTarget != null)
         {
-            player.transform.position = teleportTarget.position;
+            var target = player;
+            target.transform.position = teleportTarget.position;
         }
     }
 
@@ -66,8 +68,13 @@ public class DoorTeleport : MonoBehaviour,IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;           
-            InteractionManager.instance.Register(this);
+            player = other.transform;
+            playerInRange = true;
+
+
+            if (isSinglePlayer)
+                InteractionManager.instance?.Register(this);
+
             if (autoTeleport)
                 Interact();
         }
@@ -78,8 +85,10 @@ public class DoorTeleport : MonoBehaviour,IInteractable
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-           
-            InteractionManager.instance.Unregister(this);
+            player = null ;
+
+            if (isSinglePlayer)
+                InteractionManager.instance?.Unregister(this);
         }
     }
 
