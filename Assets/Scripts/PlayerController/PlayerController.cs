@@ -36,8 +36,8 @@ public class PlayerController : LivingEntity
     //inputs
     private PlayerInput _playerInput;
     private InputAction _moveAction;
-    private InputAction _aimStickAction;
-    private InputAction _aimPointerAction;
+    private InputAction _aimAction;
+   // private InputAction _aimPointerAction;
     private InputAction _runAction;
     private InputAction _fireAction;
     private InputAction _reloadAction;
@@ -61,8 +61,8 @@ public class PlayerController : LivingEntity
         _playerInput = GetComponent<PlayerInput>();
         var gameplay = _playerInput.actions;
         _moveAction = gameplay["Move"];
-        _aimStickAction = gameplay["AimStick"];
-        _aimPointerAction = gameplay["AimPointer"];
+        _aimAction = gameplay["Aim"];
+       // _aimPointerAction = gameplay["AimPointer"];
         _runAction = gameplay["Run"];
         _fireAction = gameplay["Fire"];
         _reloadAction = gameplay["Reload"];
@@ -99,8 +99,8 @@ public class PlayerController : LivingEntity
     void OnEnable()
     {
         _moveAction.Enable();
-        _aimStickAction.Enable();
-        _aimPointerAction.Enable();
+        _aimAction.Enable();
+      //  _aimPointerAction.Enable();
         _runAction.Enable();
         //weapon input:
         _fireAction.canceled += weaponController.OnTriggerRelease;
@@ -114,8 +114,8 @@ public class PlayerController : LivingEntity
     void OnDisable()
     {
         _moveAction.Disable();
-        _aimStickAction.Disable();
-        _aimPointerAction.Disable();
+        _aimAction.Disable();
+      //  _aimPointerAction.Disable();
         _runAction.Disable(); 
         //weapon input:
         _fireAction.canceled -= weaponController.OnTriggerRelease;
@@ -134,14 +134,15 @@ public class PlayerController : LivingEntity
         RunInput = _runAction.IsPressed();
         
         // Aim read
-        Vector2 stick = _aimStickAction.ReadValue<Vector2>();
+        Vector3 stick = _aimAction.ReadValue<Vector2>();
         if (stick.sqrMagnitude > 0.01f)
         {
             AimDirection = stick.normalized;
         }
         else
         {
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            //Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(stick);
             mouseWorld.z = 0f; // force flat plane
             AimDirection = ((Vector2)(mouseWorld - transform.position)).normalized;        
 
@@ -205,20 +206,40 @@ public class PlayerController : LivingEntity
 
     void rotateTowardsAim()
     {
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        mouseWorld.z = 0f;
-        Vector2 dir = ((Vector2)(mouseWorld - transform.position)).normalized;
+        if (_playerInput.currentControlScheme == "Keyboard&Mouse")
+        {
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            mouseWorld.z = 0f;
+            Vector2 dir = ((Vector2)(mouseWorld - transform.position)).normalized;
 
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Hand.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Hand.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-        bool flip = AimDirection.x < 0f;
-        CharacterSprite.flipX = flip;
-        //item on hand flip:
-        Vector3 scale = ItemOnHand.transform.localScale;
-        scale.y = Mathf.Abs(scale.y) * (flip ? -1f : 1f);
-        ItemOnHand.transform.localScale = scale;
-        //---
+            bool flip = AimDirection.x < 0f;
+            CharacterSprite.flipX = flip;
+            //item on hand flip:
+            Vector3 scale = ItemOnHand.transform.localScale;
+            scale.y = Mathf.Abs(scale.y) * (flip ? -1f : 1f);
+            ItemOnHand.transform.localScale = scale;
+            //---
+
+        }
+        else if(_playerInput.currentControlScheme == "Gamepad")
+        {
+
+            Vector2 aimInput = _aimAction.ReadValue<Vector2>();
+            if (aimInput.sqrMagnitude < 0.01f)
+                return;
+
+            Vector2 dir = aimInput.normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            Hand.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            // Optional: Debug
+            Debug.Log("Angle: " + angle + " | Dir: " + dir);
+        }
+
 
     }
 
