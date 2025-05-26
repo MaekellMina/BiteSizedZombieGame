@@ -12,15 +12,13 @@ namespace cc.Interaction
         public Sprite openSprite;
         public bool isOpen = false;
         public Transform teleportTarget;
+        [Space]
         public bool autoTeleport = false;
-
-        private SpriteRenderer spriteRenderer;
-        private bool playerInRange = false;
-        [SerializeField]
-        private Transform player;
-
         public bool isSinglePlayer = false;
 
+        private SpriteRenderer spriteRenderer;
+        private bool playerInRange = false;   
+        private Transform player;
         void Start()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();

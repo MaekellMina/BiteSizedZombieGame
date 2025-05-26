@@ -31,8 +31,7 @@ namespace cc.Interaction.SO
         private void Awake()
         {
             if (UseAttachedInteractable)
-            {
-             //   AttachedInteractable = GetComponent<IInteractable>();
+            {            
                 UseAttachedInteractable = (AttachedInteractable != null);
             }
         }
@@ -116,6 +115,7 @@ namespace cc.Interaction.SO
                 }
 
                 if (AttachedInteractable == null) return;
+
                 if (!EventContainsMethod(OnInteract, this, nameof(TriggerInteractable)))
                 {
                     UnityEditor.Events.UnityEventTools.AddPersistentListener(OnInteract, TriggerInteractable);
