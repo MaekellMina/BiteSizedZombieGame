@@ -1,0 +1,334 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8247598016633135935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8247598016633135873}
+  - component: {fileID: 8247598016633135875}
+  - component: {fileID: 8247598016633135934}
+  - component: {fileID: 8247598016633135872}
+  m_Layer: 0
+  m_Name: MorseCode beeper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8247598016633135873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247598016633135935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.150376, y: 23.299198, z: -0.28326568}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8247598016633135875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247598016633135935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18291f5d282aafb42a5e9334f1531c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: Hello Work
+  morseTranslation: .... . .-.. .-.. --- / .-- --- .-. -.-
+  currentPatternKey: 00000000000000000000000000000000ffffffff00000000ffffffff00000000010000000000000000000000ffffffff00000000010000000000000000000000ffffffff010000000100000001000000feffffff000000000100000001000000ffffffff010000000100000001000000ffffffff000000000100000000000000ffffffff010000000000000001000000
+  morseToTranslate: 
+  morseToTranslateResult: 
+  MorseChart: {fileID: 4900000, guid: a762044fc1d1dcb4694f0e8247444606, type: 3}
+  Key:
+  - character: 32
+    code: /
+    pattern: feffffff
+  - character: 65
+    code: .-
+    pattern: 0000000001000000
+  - character: 66
+    code: -...
+    pattern: 01000000000000000000000000000000
+  - character: 67
+    code: -.-.
+    pattern: 01000000000000000100000000000000
+  - character: 68
+    code: -..
+    pattern: 010000000000000000000000
+  - character: 69
+    code: .
+    pattern: 00000000
+  - character: 70
+    code: ..-.
+    pattern: 00000000000000000100000000000000
+  - character: 71
+    code: --.
+    pattern: 010000000100000000000000
+  - character: 72
+    code: ....
+    pattern: 00000000000000000000000000000000
+  - character: 73
+    code: ..
+    pattern: 0000000000000000
+  - character: 74
+    code: .---
+    pattern: 00000000010000000100000001000000
+  - character: 75
+    code: -.-
+    pattern: 010000000000000001000000
+  - character: 76
+    code: .-..
+    pattern: 00000000010000000000000000000000
+  - character: 77
+    code: --
+    pattern: 0100000001000000
+  - character: 78
+    code: -.
+    pattern: 0100000000000000
+  - character: 79
+    code: ---
+    pattern: 010000000100000001000000
+  - character: 80
+    code: .--.
+    pattern: 00000000010000000100000000000000
+  - character: 81
+    code: --.-
+    pattern: 01000000010000000000000001000000
+  - character: 82
+    code: .-.
+    pattern: 000000000100000000000000
+  - character: 83
+    code: ...
+    pattern: 000000000000000000000000
+  - character: 84
+    code: '-'
+    pattern: 01000000
+  - character: 85
+    code: ..-
+    pattern: 000000000000000001000000
+  - character: 86
+    code: ...-
+    pattern: 00000000000000000000000001000000
+  - character: 87
+    code: .--
+    pattern: 000000000100000001000000
+  - character: 88
+    code: -..-
+    pattern: 01000000000000000000000001000000
+  - character: 89
+    code: -.--
+    pattern: 01000000000000000100000001000000
+  - character: 90
+    code: --..
+    pattern: 01000000010000000000000000000000
+  - character: 48
+    code: -----
+    pattern: 0100000001000000010000000100000001000000
+  - character: 49
+    code: .----
+    pattern: 0000000001000000010000000100000001000000
+  - character: 50
+    code: ..---
+    pattern: 0000000000000000010000000100000001000000
+  - character: 51
+    code: ...--
+    pattern: 0000000000000000000000000100000001000000
+  - character: 52
+    code: ....-
+    pattern: 0000000000000000000000000000000001000000
+  - character: 53
+    code: .....
+    pattern: 0000000000000000000000000000000000000000
+  - character: 54
+    code: -....
+    pattern: 0100000000000000000000000000000000000000
+  - character: 55
+    code: --...
+    pattern: 0100000001000000000000000000000000000000
+  - character: 56
+    code: ---..
+    pattern: 0100000001000000010000000000000000000000
+  - character: 57
+    code: ----.
+    pattern: 0100000001000000010000000100000000000000
+  - character: 46
+    code: .-.-.-
+    pattern: 000000000100000000000000010000000000000001000000
+  - character: 44
+    code: --..--
+    pattern: 010000000100000000000000000000000100000001000000
+  - character: 63
+    code: ..--..
+    pattern: 000000000000000001000000010000000000000000000000
+  - character: 39
+    code: .----.
+    pattern: 000000000100000001000000010000000100000000000000
+  - character: 33
+    code: -.-.--
+    pattern: 010000000000000001000000000000000100000001000000
+  - character: 47
+    code: -..-.
+    pattern: 0100000000000000000000000100000000000000
+  - character: 40
+    code: -.--.
+    pattern: 0100000000000000010000000100000000000000
+  - character: 41
+    code: -.--.-
+    pattern: 010000000000000001000000010000000000000001000000
+  - character: 38
+    code: .-...
+    pattern: 0000000001000000000000000000000000000000
+  - character: 58
+    code: ---...
+    pattern: 010000000100000001000000000000000000000000000000
+  - character: 59
+    code: -.-.-.
+    pattern: 010000000000000001000000000000000100000000000000
+  - character: 61
+    code: -...-
+    pattern: 0100000000000000000000000000000001000000
+  - character: 43
+    code: .-.-.
+    pattern: 0000000001000000000000000100000000000000
+  - character: 45
+    code: -....-
+    pattern: 010000000000000000000000000000000000000001000000
+  - character: 95
+    code: ..--.-
+    pattern: 000000000000000001000000010000000000000001000000
+  - character: 34
+    code: .-..-.
+    pattern: 000000000100000000000000000000000100000000000000
+  - character: 36
+    code: ...-..-
+    pattern: 00000000000000000000000001000000000000000000000001000000
+  - character: 64
+    code: .--.-.
+    pattern: 000000000100000001000000000000000100000000000000
+--- !u!114 &8247598016633135934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247598016633135935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018045ca3752160499ef6842095d557d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dit: {fileID: 8300000, guid: b0ea3ee8b8299c046b1391cefc4f0132, type: 3}
+  Dah: {fileID: 8300000, guid: c13ccab416e6bb040866f088cd4edd2d, type: 3}
+  Beeper: {fileID: 8247598016633135872}
+  beepAudioList:
+  - {fileID: 8300000, guid: b0ea3ee8b8299c046b1391cefc4f0132, type: 3}
+  - {fileID: 8300000, guid: c13ccab416e6bb040866f088cd4edd2d, type: 3}
+--- !u!82 &8247598016633135872
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247598016633135935}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.519
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
